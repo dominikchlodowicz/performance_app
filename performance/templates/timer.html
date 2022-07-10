@@ -2,6 +2,16 @@
 
 {% block title %}Performance App{% endblock %}
 
+{% block head %}
+{{ super() }}
+<script type="text/javascript">
+    function timer(state){
+      console.log(state[0])  
+    };
+    console.log('Hello World!');
+</script>
+{% endblock %}
+
 {% block body %}
 <div class="Timer">
     <h1>Here's the timer</h1>
