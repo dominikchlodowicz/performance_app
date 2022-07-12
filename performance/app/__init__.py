@@ -5,7 +5,7 @@ from flask_bootstrap import Bootstrap
 bootstrap = Bootstrap()
 
 def create_app():
-    app = Flask(__name__, template_folder='../templates')
+    app = Flask(__name__, template_folder='../templates', static_folder='../static')
 
     #blueprint registration
     from performance.main import main as main_blueprint
