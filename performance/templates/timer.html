@@ -4,17 +4,88 @@
 
 {% block head %}
 {{ super() }}
-<script type="text/javascript">
-    function timer(state){
-      console.log(state[0])  
-    };
-    console.log('Hello World!');
-</script>
 {% endblock %}
 
 {% block body %}
 <div class="Timer">
     <h1>Here's the timer</h1>
-    <span> {{time}} </span>
+    <span id="hours" >00</span> <span id="minutes">00</span> <span id="seconds">00</span>
+    <button type="button" class="btn btn-success" onclick="start()">Start</button>
+    <button type="button" class="btn btn-danger" onclick="stopStopwatch()">Stop</button>
+    <button type="button" class="btn btn-warning" onclick="reset()">Reset</button>
+    
+    <!-- <span> {{time}} </span> -->
 </div>
+<script type="text/javascript">
+    var hours = 0;
+    var minutes = 0;
+    var seconds = 0;
+    var displayHours = document.getElementById("hours");
+    var displayMinutes = document.getElementById("minutes");
+    var displaySeconds = document.getElementById("seconds");
+    var buttonStart = document.getElementById("start");
+    var buttonEnd = document.getElementById("end");
+    var buttonReset = document.getElementById("reset");
+    var Interval;
+
+    function startStopwatch(){
+        seconds++;
+
+        if(minutes == 59 && seconds == 59){
+            minutes = 0;
+            seconds = 0;
+            displayMinutes.innerHTML = "0" + minutes;
+            displaySeconds.innerHTML = "0" + seconds;
+            
+            hours++;
+            if(hours <= 9){
+                displayHours.innerHTML = "0" + hours;
+            } else {
+                displayHours.innerHTML = hours;
+            }
+        }
+
+        if(seconds == 59){
+            seconds = 0;
+            displaySeconds.innerHTML = "0" + seconds;
+
+            minutes++;
+            if(minutes <+ 9){
+                displayMinutes.innerHTML = "0" + minutes;
+            } else {
+                displayMinutes.innerHTML = mintues;
+            }
+        }
+
+        if(seconds <= 9){
+            displaySeconds.innerHTML = "0" + seconds;
+        } else {
+            displaySeconds.innerHTML = seconds;
+        }
+    }
+    
+    function stopStopwatch(){
+        clearInterval(Interval);
+    }
+
+    function start(){
+        Interval = setInterval(startStopwatch, 1000)
+    }
+
+
+    function reset(){
+        clearInterval(Interval);
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+        displaySeconds.innerHTML = "0" + seconds;
+        displayMinutes.innerHTML = "0" + minutes;
+        displayHours.innerHTML = "0" + hours;
+    }
+
+    function sync(){
+        // TODO:
+    }
+
+</script>
 {% endblock %}
