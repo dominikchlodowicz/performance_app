@@ -7,10 +7,12 @@ var displaySeconds = document.getElementById("seconds");
 var buttonStart = document.getElementById("start");
 var buttonStop = document.getElementById("stop");
 var buttonReset = document.getElementById("reset");
+var timerValue = document.getElementById("timerValue");
 
 var Interval;
 
 function startStopwatch(){
+    document.getElementById("timerValue").removeAttribute("value");
     seconds++;
 
     if(minutes == 59 && seconds == 59){
@@ -35,7 +37,7 @@ function startStopwatch(){
         if(minutes <+ 9){
             displayMinutes.innerHTML = "0" + minutes;
         } else {
-            displayMinutes.innerHTML = mintues;
+            displayMinutes.innerHTML = minutes;
         }
     }
 
@@ -44,6 +46,8 @@ function startStopwatch(){
     } else {
         displaySeconds.innerHTML = seconds;
     }
+
+    timerValue.setAttribute("value", `${hours}:${minutes}:${seconds}`);
 }
 
 function stopStopwatch(){
@@ -67,6 +71,9 @@ function reset(){
 
 buttonStart.onclick = start;
 buttonStop.onclick = stopStopwatch;
-buttonReset.onclick = reset;
+
+buttonReset.addEventListener('click', () => {
+    reset();
+});
 
 
