@@ -11,6 +11,8 @@ var timerValue = document.getElementById("timerValue");
 
 var Interval;
 
+timerValue.value = '0:0:0';
+
 function startStopwatch(){
     document.getElementById("timerValue").removeAttribute("value");
     seconds++;

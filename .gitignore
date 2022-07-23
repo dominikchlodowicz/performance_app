@@ -1,6 +1,6 @@
 #parts of project
 venv/
-secrets/
+secret/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
