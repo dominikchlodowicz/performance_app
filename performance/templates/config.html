@@ -1,0 +1,42 @@
+{% block title %}Performance App{% endblock %}
+
+{% block body %}
+<form method="POST" id="configform">
+    <label for="intervals">Number of Intervals:</label>
+    <select name="intervals" id="intervals">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select>
+    
+    <label for="durationInterval">Duration of interval:</label>
+    <input type="number" name="durationInterval" id="durationInterval" placeholder="e.g. 25">
+    <select name="durationIntervalTime" id="durationIntervalTime">
+        <option value="minutes">Min.</option>
+        <option value="hours">Hr.</option>
+    </select>
+
+    <label for="durationBreak">Duration of break:</label>
+    <input type="number" name="durationBreak" id="durationBreak" placeholder="e.g. 5">
+    <select name="durationBreakTime" id="durationBreakTime">
+        <option value="minutes">Min.</option>
+    </select>
+
+    <input type="submit" name="start" value="Start">
+
+    <!-- <a href="{{ url_for('main.pomodoro') }}" onclick="document.getElementById('configform').submit()">Start</a> -->
+    <!-- <a href="#" id="submitButton" onclick="document.getElementById('configform').submit()">Start</a> -->
+</form>
+
+<script>
+    // var submitButton = document.getElementById('submitButton');
+    // submitButton.addEventListener("click", function () {window.location.replace('{{ url_for("main.pomodoro") }}')});
+</script>
+{% endblock %}

@@ -1,5 +1,5 @@
-from flask import render_template, request, redirect, url_for, session, make_response
-from .database import insert_time, get_time
+from urllib import response
+from flask import redirect, render_template, session, request, url_for, make_response
 from . import main
 from ..stopwatch.stopwatch_handling import view_time
 import uuid
@@ -18,6 +18,20 @@ def set_user_id():
 def timer():
      return view_time('timer', 'timer.html')
 
-# @main.route('/pomodoro', methods=["GET", "POST"])
-# def pomodoro():
-#      pass
+@main.route('/pomodoro', methods=["GET", "POST"])
+def pomodoro():
+     return render_template('pomodoro.html')
+
+@main.route('/pomodoroconfig', methods=["GET", "POST"])
+def pomodoroconfig():          
+     if request.method == 'POST':
+          config_values = ('intervals', 'durationInterval', 'durationIntervalTime', 'durationBreak' ,'durationBreakTime')
+          
+          response = make_response(redirect('./pomodoro'))
+          for form_element_name in config_values:
+               response.set_cookie(f'{form_element_name}', request.form[form_element_name])
+          return response
+
+     elif request.method == 'GET':
+          print('GET method')
+          return render_template('config.html')
