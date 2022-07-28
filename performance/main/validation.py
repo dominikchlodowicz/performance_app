@@ -1,32 +1,36 @@
-def validate_time(value_tuple):
-    if value_tuple[0].isnumeric() == False:
-        return 'Input is not numeric!'
+def validate_time(time_tuple):
+    try:
+        int(time_tuple[0])
+    except ValueError:
+        return {'validation_flag': False, 'error': 'Input is not numeric!'}
 
-    value = int(value_tuple[0])
-    time_value =  value_tuple[1]
-    
-    if time_value == 'minutes' and value > 59:
-        return 'Too many minutes!'
-    
-    if time_value == 'minutes' and value == 60:
-        value += 1
-        time_value = 'hours'
-    
-    if value <= 0:
-        return 'Cant input zeros or negative numbers!'
+    time = int(time_tuple[0])
+    min_or_hr = time_tuple[1]
 
-    return (value, time_value)
+    if min_or_hr == 'minutes' and time > 59:
+        return {'validation_flag': False, 'error': 'Too many minutes!'}
 
-    #TODO:
-    '''
-        - Only numeric
-        - Not more then 60 minutes
-        - Required
-        
-        - Sending output to frontend staright so already 
-            validating on client-side
-    
-    '''
+    if min_or_hr == 'minutes' and time == 60:
+        time += 1
+        min_or_hr = 'hours'
+
+    if time <= 0:
+        return {'validation_flag': False, 'error': 'Cant input zeros or negative numbers!'}
+
+    return {'validation_flag': True, 'time': time, 'min_or_hr': min_or_hr}
 
 
-    
+def data_formatting(time, min_or_hr):
+    if min_or_hr == 'hours':
+        hours = time
+        if hours < 10:
+            return f'0{hours}:00:00'
+        else:
+            return f'{hours}:00:00'
+
+    if min_or_hr == 'minutes':
+        minutes = time
+        if minutes < 10:
+            return f'00:0{minutes}:00'
+        else:
+            return f'00:{minutes}:00'

@@ -1,7 +1,7 @@
 from flask import redirect, render_template, session, request, url_for, make_response
 from . import main
 from ..stopwatch.stopwatch_handling import view_time
-from .validation import validate_time
+from .validation import validate_time, data_formatting
 import uuid
 
 @main.route('/')
@@ -22,7 +22,7 @@ def timer():
 def pomodoroconfig():          
      if request.method == 'POST':
 
-          config_values = ('intervals',('durationInterval', 'durationIntervalTime'), ('durationBreak' ,'durationBreakTime'))
+          config_values = ('intervals',('workDuration', 'workDurationHrOrMin'), ('breakDuration' ,'breakDurationHrOrMin'))
           response = make_response(redirect(url_for('main.pomodoro')))
 
           for form_element_name in config_values:
@@ -32,13 +32,13 @@ def pomodoroconfig():
 
                else:
                     validated_data = validate_time((request.form[form_element_name[0]], request.form[form_element_name[1]]))
-                    if type(validated_data) != tuple:
-                         session['error'] = validated_data
+                    if validated_data['validation_flag'] == False:
+                         session['error'] = validated_data['error']
                          return redirect(url_for('main.pomodoroconfig'))
-                    else:
+                         
+                    elif validated_data['validation_flag']:
                          session['error'] = None
-                         response.set_cookie(f'{form_element_name[0]}', str(validated_data[0]))
-                         response.set_cookie(f'{form_element_name[1]}', str(validated_data[1]))
+                         response.set_cookie(f'{form_element_name[0]}', str(data_formatting(validated_data['time'], validated_data['min_or_hr'])))
                          return response
 
      elif request.method == 'GET':

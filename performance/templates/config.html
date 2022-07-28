@@ -16,29 +16,21 @@
         <option value="10">10</option>
     </select>
     
-    <label for="durationInterval">Duration of interval:</label>
-    <input type="number" name="durationInterval" id="durationInterval" placeholder="e.g. 25" required>
-    <select name="durationIntervalTime" id="durationIntervalTime">
+    <label for="workDuration">Duration of work:</label>
+    <input type="number" name="workDuration" id="workDuration" placeholder="e.g. 25" required>
+    <select name="workDurationHrOrMin" id="workDurationHrOrMin">
         <option value="minutes">Min.</option>
         <option value="hours">Hr.</option>
     </select>
 
-    <label for="durationBreak">Duration of break:</label>
-    <input type="number" name="durationBreak" id="durationBreak" placeholder="e.g. 5" required>
-    <select name="durationBreakTime" id="durationBreakTime">
+    <label for="breakDuration">Duration of break:</label>
+    <input type="number" name="breakDuration" id="breakDuration" placeholder="e.g. 5" required>
+    <select name="breakDurationHrOrMin" id="breakDurationHrOrMin">
         <option value="minutes">Min.</option>
     </select>
 
     <input type="submit" name="start" value="Start">
     <br/>
     <span>{{session['error']}}</span>
-
-    <!-- <a href="{{ url_for('main.pomodoro') }}" onclick="document.getElementById('configform').submit()">Start</a> -->
-    <!-- <a href="#" id="submitButton" onclick="document.getElementById('configform').submit()">Start</a> -->
 </form>
-
-<script>
-    // var submitButton = document.getElementById('submitButton');
-    // submitButton.addEventListener("click", function () {window.location.replace('{{ url_for("main.pomodoro") }}')});
-</script>
 {% endblock %}
