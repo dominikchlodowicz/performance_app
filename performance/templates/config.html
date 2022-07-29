@@ -31,6 +31,13 @@
 
     <input type="submit" name="start" value="Start">
     <br/>
-    <span>{{session['error']}}</span>
 </form>
 {% endblock %}
+
+{% block error %}
+    {% if session['error'] == None %}
+        <span></span>
+    {% else %}
+        <span>{{ session['error'] }}</span>
+    {% endif %}
+{% endblock error %}
