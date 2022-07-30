@@ -17,7 +17,8 @@ function getCookie(cookie){
                 continue;
             }
 
-            flag ? cookie_value += splittedCookiesList[splittedCookie][char] : cookie_name += splittedCookiesList[splittedCookie][char];
+            flag ? cookie_value += splittedCookiesList[splittedCookie][char] 
+                : cookie_name += splittedCookiesList[splittedCookie][char];
         }
         cookies[cookie_name] = cookie_value;
     }
@@ -26,7 +27,8 @@ function getCookie(cookie){
 
 console.log(getCookie(cookie));
 
-function startPomodoro(numberOfIntervals, durationOfInterval, durationOfIntervalTime,
-     durationOfBreak, durationBreakTime){
-  
+function startPomodoro(numberOfIntervals, durationOfInterval, durationOfBreak){
+    while(numberOfIntervals > 0){
+        numberOfIntervals--;
+    }
 }

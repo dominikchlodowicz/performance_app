@@ -57,7 +57,7 @@ function stopStopwatch(){
 }
 
 function start(){
-    Interval = setInterval(startStopwatch, 1000);
+    Interval = setInterval(startStopwatch, 1000); 
 }
 
 
