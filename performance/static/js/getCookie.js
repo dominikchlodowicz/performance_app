@@ -1,10 +1,4 @@
-timerValue.value = '0:0:0';
-
-const config_values = ['intervals', 'workDuration', 'breakDuration'];
-
-var cookie = document.cookie;
-
-function getCookie(cookie){
+export function getCookie(cookie){
     const splittedCookiesList = cookie.split("; ");
     var cookies = {};
     for(var splittedCookie = 0; splittedCookie < splittedCookiesList.length; splittedCookie++){
@@ -23,12 +17,4 @@ function getCookie(cookie){
         cookies[cookie_name] = cookie_value;
     }
     return cookies;
-}
-
-console.log(getCookie(cookie));
-
-function startPomodoro(numberOfIntervals, durationOfInterval, durationOfBreak){
-    while(numberOfIntervals > 0){
-        numberOfIntervals--;
-    }
 }

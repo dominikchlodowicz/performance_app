@@ -1,64 +1,105 @@
+import { getCookie } from "./getCookie"
+
 class Stopwatch{
 
-    #hours = null
-    #minutes = null
-    #seconds = null
-    #timerValueElement = null
-    #displayHoursElement = null
-    #displayMinutesElement = null
-    #displaySecondsElement = null
+    hours = null
+    minutes = null
+    seconds = null
+    timerValueElement = null
+    displayHoursElement = null
+    displayMinutesElement = null
+    displaySecondsElement = null
+    pomodoroIntervals = null
+    workDuration = null
+    breakDuration = null
 
     static Builder = class {
-        #hours = null
-        #minutes = null
-        #seconds = null
-        #timerValueElement = null
-        #displayHoursElement = null
-        #displayMinutesElement = null
-        #displaySecondsElement = null
+
+        hours = null
+        minutes = null
+        seconds = null
+        timerValueElement = null
+        displayHoursElement = null
+        displayMinutesElement = null
+        displaySecondsElement = null
+        pomodoroIntervals = null
+        workDuration = null
+        breakDuration = null
 
         setTime(hours, minutes, seconds){
-            this.#hours = hours;
-            this.#minutes = minutes;
-            this.#seconds = seconds;
+            console.log(`${this.hours}`)
+            this.hours = hours;
+            this.minutes = minutes;
+            this.seconds = seconds;
+            return this
         }
 
         setTimeDisplay(displayHoursElement, displayMinutesElement, displaySecondsElement){
-            this.#displayHoursElement = displayHoursElement;
-            this.#displayMinutesElement = displayMinutesElement;
-            this.#displaySecondsElement = displaySecondsElement;
+            this.displayHoursElement = displayHoursElement;
+            this.displayMinutesElement = displayMinutesElement;
+            this.displaySecondsElement = displaySecondsElement;
+            return this
         }
 
         setDataPassElement(timerValueElement){
-            this.#timerValueElement = timerValueElement;
+            this.timerValueElement = timerValueElement;
+            return this
+        }
+
+        setIntervalElement(){
+            this.interval;
+            return this
+        }
+
+        setNoPomodoro(){
+            this.pomodoroIntervals = 0;
+            this.workDuration = 0;
+            this.breakDuration = 0;
+            return this
+        }
+
+        setPomodoro(cookie){
+            var cookies = getCookie(cookie);
+            this.pomodoroIntervals = cookies["intervals"];
+            this.workDuration = cookies["workDuration"];
+            this.breakDuration = cookies["breakDuration"];
+            return this
         }
 
         build(){
             const stopwatch = new Stopwatch(
-                this.#hours,
-                this.#minutes,
-                this.#seconds,
-                this.#displayHoursElement,
-                this.#displayMinutesElement,
-                this.#displaySecondsElement,
-                this.#timerValueElement)
+                this.hours,
+                this.minutes,
+                this.seconds,
+                this.displayHoursElement,
+                this.displayMinutesElement,
+                this.displaySecondsElement,
+                this.timerValueElement,
+                this.interval,
+                this.pomodoroIntervals,
+                this.workDuration,
+                this.breakDuration)
             return stopwatch  
         }
     }
 
-    constructor(hours, minutes, seconds, displayHoursElement, displayMinutesElement, displaySecondsElement, timerValueElement){
-        this.#hours = hours;
-        this.#minutes = minutes;
-        this.#seconds = seconds;
-        this.#displayHoursElement = displayHoursElement;
-        this.#displayMinutesElement = displayMinutesElement;
-        this.#displaySecondsElement = displaySecondsElement;
-        this.#timerValueElement = timerValueElement;
-        this.#interval;
+    constructor(hours, minutes, seconds, displayHoursElement, displayMinutesElement
+        ,displaySecondsElement, timerValueElement, pomodoroIntervals, workDuration, breakDuration){
+        this.hours = hours;
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.displayHoursElement = displayHoursElement;
+        this.displayMinutesElement = displayMinutesElement;
+        this.displaySecondsElement = displaySecondsElement;
+        this.timerValueElement = timerValueElement;
+        this.interval;
+        this.pomodoroIntervals = pomodoroIntervals;
+        this.workDuration = workDuration;
+        this.breakDuration = breakDuration;
     }
 
     stopwatch(){
-        document.getElementById(`${this.timerValueElement}`).removeAttribute("value");
+        this.timerValueElement.removeAttribute("value");
         this.seconds++;
     
         if(this.minutes == 59 && this.seconds == 59){
@@ -97,7 +138,7 @@ class Stopwatch{
     }
 
     start(){
-        this.interval = setInterval(this.stopwatch(), 1000);
+        this.interval = setInterval(this.stopwatch.bind(this), 1000);
     }
 
     stop(){
@@ -113,9 +154,10 @@ class Stopwatch{
         this.displayMinutesElement.innerHTML = "0" + minutes;
         this.displayHoursElement = "0" + hours;
     }
-    
+
+    logCookie(){
+        console.log(`intervasl: ${this.pomodoroIntervals}, work: ${this.workDuration}, break: ${this.breakDuration}`);
+    }
 }
 
-class Pomodoro extends Stopwatch{
-    //TODO:implement pomodoro front-end functionality
-}
+export {Stopwatch};
