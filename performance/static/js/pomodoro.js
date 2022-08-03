@@ -1,4 +1,4 @@
-import {Stopwatch} from './stopwatch.js';
+import { Stopwatch } from './stopwatch.js';
 
 var hours = 0;
 var minutes = 0;
@@ -11,16 +11,18 @@ var buttonStop = document.getElementById("stop");
 var buttonReset = document.getElementById("reset");
 var timerValue = document.getElementById("timerValue");
 
+var cookie = document.cookie;
+
 const stopwatch = new Stopwatch.Builder()
     .setTime(hours, minutes, seconds)
     .setTimeDisplay(displayHours, displayMinutes, displaySeconds)
     .setDataPassElement(timerValue)
     .setIntervalElement()
-    .setNoPomodoro()
+    .setPomodoro(cookie)
     .build();
 
 buttonStart.addEventListener('click', () => {
-    stopwatch.startStopwatch();
+    stopwatch.pomodoro();
 });
 
 buttonStop.addEventListener('click', () => {

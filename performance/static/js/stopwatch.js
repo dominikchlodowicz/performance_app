@@ -1,4 +1,4 @@
-import { getCookie } from "./getCookie"
+import { getCookie } from "./getCookie.js";
 
 class Stopwatch{
 
@@ -27,7 +27,6 @@ class Stopwatch{
         breakDuration = null
 
         setTime(hours, minutes, seconds){
-            console.log(`${this.hours}`)
             this.hours = hours;
             this.minutes = minutes;
             this.seconds = seconds;
@@ -84,7 +83,8 @@ class Stopwatch{
     }
 
     constructor(hours, minutes, seconds, displayHoursElement, displayMinutesElement
-        ,displaySecondsElement, timerValueElement, pomodoroIntervals, workDuration, breakDuration){
+        ,displaySecondsElement, timerValueElement, interval, pomodoroIntervals, workDuration
+        ,breakDuration){
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
@@ -92,7 +92,7 @@ class Stopwatch{
         this.displayMinutesElement = displayMinutesElement;
         this.displaySecondsElement = displaySecondsElement;
         this.timerValueElement = timerValueElement;
-        this.interval;
+        this.interval = interval;
         this.pomodoroIntervals = pomodoroIntervals;
         this.workDuration = workDuration;
         this.breakDuration = breakDuration;
@@ -101,7 +101,6 @@ class Stopwatch{
     stopwatch(){
         this.timerValueElement.removeAttribute("value");
         this.seconds++;
-    
         if(this.minutes == 59 && this.seconds == 59){
             this.minutes = 0;
             this.seconds = 0;
@@ -121,7 +120,7 @@ class Stopwatch{
             this.displaySecondsElement.innerHTML = "0" + this.seconds;
     
             this.minutes++;
-            if(this.minutes <+ 9){
+            if(this.minutes <= 9){
                 this.displayMinutesElement.innerHTML = "0" + this.minutes;
             } else {
                 this.displayMinutesElement.innerHTML = this.minutes;
@@ -133,11 +132,67 @@ class Stopwatch{
         } else {
             this.displaySecondsElement.innerHTML = this.seconds;
         }
-    
         this.timerValueElement.setAttribute("value", `${this.hours}:${this.minutes}:${this.seconds}`);
     }
 
-    start(){
+    stopwatchReversed(){
+        console.log(this.timerValueElement.value);
+        this.timerValueElement.removeAttribute("value");
+
+        if(this.seconds <= 9){
+            this.displaySecondsElement.innerHTML = "0" + this.seconds;
+        }
+
+        if(this.minutes <= 9){
+            this.displayMinutesElement.innerHTML = "0" + this.minutes;
+        }
+
+        if(this.hours <= 9){
+            this.displayHoursElement.innerHTML = "0" + this.hours;
+        }
+
+        if(this.hours == 0 && this.minutes == 0 && this.seconds == 0){
+            clearInterval(this.interval);
+        }
+
+        if(this.minutes == 0 && this.seconds == 0){
+            this.hours--;
+            this.minutes = 59;
+            this.seconds = 59;
+            
+            if(this.hours <= 9){
+                this.displayMinutesElement.innerHTML = "0" + this.minutes;
+            } else {
+                this.displayMinutesElement.innerHTML = this.minutes;
+            }
+        }
+
+        if(this.seconds == 0){
+            this.minutes--;
+            this.seconds = 59;
+
+            if(this.minutes <= 9){
+                this.displayMinutesElement.innerHTML = "0" + this.minutes;
+            } else {
+                this.displayMinutesElement.innerHTML = this.minutes;
+            }
+        }
+
+        this.seconds--;
+
+        this.timerValueElement.setAttribute("value", `${this.hours}:${this.minutes}:${this.seconds}`);
+    }
+
+    startReversedStopwatch(startHours, startMinutes, startSeconds){
+        this.hours = parseInt(startHours);
+        this.minutes = parseInt(startMinutes);
+        this.seconds = parseInt(startSeconds);
+        this.interval = setInterval(this.stopwatchReversed.bind(this), 1000);
+        return 0;
+
+    }
+
+    startStopwatch(){
         this.interval = setInterval(this.stopwatch.bind(this), 1000);
     }
 
@@ -155,8 +210,13 @@ class Stopwatch{
         this.displayHoursElement = "0" + hours;
     }
 
-    logCookie(){
-        console.log(`intervasl: ${this.pomodoroIntervals}, work: ${this.workDuration}, break: ${this.breakDuration}`);
+    pomodoro(){
+        const workDuration = this.workDuration.split(':');
+        const breakDuration = this.breakDuration.split(':');
+        for(let pomodoroInterval = 0; pomodoroInterval < parseInt(this.pomodoroIntervals); pomodoroInterval++){
+            this.startReversedStopwatch(workDuration[0], workDuration[1], workDuration[2]);
+            // this.startReversedStopwatch(breakDuration[0], breakDuration[1], breakDuration[2]);
+        }
     }
 }
 
