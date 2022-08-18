@@ -139,8 +139,35 @@ class Stopwatch{
         console.log(this.timerValueElement.value);
         this.timerValueElement.removeAttribute("value");
 
+        if(this.minutes == 0 && this.seconds == 0){
+            this.hours--;
+            this.minutes = 59;
+            this.seconds = 60;
+            
+            if(this.hours <= 9){
+                this.displayMinutesElement.innerHTML = "0" + this.minutes;
+            } else {
+                this.displayMinutesElement.innerHTML = this.minutes;
+            }
+        }
+
+        if(this.seconds == 0){
+            this.minutes--;
+            this.seconds = 60;
+
+            if(this.minutes <= 9){
+                this.displayMinutesElement.innerHTML = "0" + this.minutes;
+            } else {
+                this.displayMinutesElement.innerHTML = this.minutes;
+            }
+        }
+
+        this.seconds--;
+
         if(this.seconds <= 9){
             this.displaySecondsElement.innerHTML = "0" + this.seconds;
+        } else {
+            this.displaySecondsElement.innerHTML = this.seconds;
         }
 
         if(this.minutes <= 9){
@@ -155,30 +182,7 @@ class Stopwatch{
             clearInterval(this.interval);
         }
 
-        if(this.minutes == 0 && this.seconds == 0){
-            this.hours--;
-            this.minutes = 59;
-            this.seconds = 59;
-            
-            if(this.hours <= 9){
-                this.displayMinutesElement.innerHTML = "0" + this.minutes;
-            } else {
-                this.displayMinutesElement.innerHTML = this.minutes;
-            }
-        }
 
-        if(this.seconds == 0){
-            this.minutes--;
-            this.seconds = 59;
-
-            if(this.minutes <= 9){
-                this.displayMinutesElement.innerHTML = "0" + this.minutes;
-            } else {
-                this.displayMinutesElement.innerHTML = this.minutes;
-            }
-        }
-
-        this.seconds--;
 
         this.timerValueElement.setAttribute("value", `${this.hours}:${this.minutes}:${this.seconds}`);
     }
@@ -197,11 +201,11 @@ class Stopwatch{
     }
 
     stop(){
-        clearInterval(this.Interval);
+        clearInterval(this.interval);
     }
 
     reset(){
-        clearInterval(this.Interval);
+        clearInterval(this.interval);
         this.hours = 0;
         this.minutes = 0;
         this.seconds = 0;
@@ -213,10 +217,7 @@ class Stopwatch{
     pomodoro(){
         const workDuration = this.workDuration.split(':');
         const breakDuration = this.breakDuration.split(':');
-        for(let pomodoroInterval = 0; pomodoroInterval < parseInt(this.pomodoroIntervals); pomodoroInterval++){
-            this.startReversedStopwatch(workDuration[0], workDuration[1], workDuration[2]);
-            // this.startReversedStopwatch(breakDuration[0], breakDuration[1], breakDuration[2]);
-        }
+        this.startReversedStopwatch(workDuration[0], workDuration[1], workDuration[2]);
     }
 }
 
