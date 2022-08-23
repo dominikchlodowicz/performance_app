@@ -63,12 +63,12 @@ class pomodoroMethods {
 
     static turnTimeIntoMs(time){
         const splittedTime = time.split(":");
-        if(time[0] == "00"){
-            console.log(`This is ms value: ${time[1] * 60000}`);
-            return time[1] * 60000
+        if(splittedTime[0] == "00"){
+            console.log(`This is ms value: ${splittedTime[1]}`);
+            return splittedTime[1] * 60000
         } else {
-            console.log(`This is ms value: ${time[0] * 3600000}`);
-            return time[0] * 3600000
+            console.log(`This is s value: ${time[0] * 3600000}`);
+            return splittedTime[0] * 3600000
         }
     }
     
