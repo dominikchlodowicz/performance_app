@@ -1,4 +1,5 @@
 import { Stopwatch } from './stopwatch.js';
+import { pomodoroMethods } from './pomodoro/pomodoroMethods.js';
 
 var hours = 0;
 var minutes = 0;
@@ -21,8 +22,11 @@ const stopwatch = new Stopwatch.Builder()
     .setPomodoro(cookie)
     .build();
 
+
+
 buttonStart.addEventListener('click', () => {
-    stopwatch.pomodoro();
+    pomodoroMethods.pomodoro(pomodoroMethods.startReversedStopwatch, stopwatch,  stopwatch.pomodoroIntervals,
+         stopwatch.workDuration, stopwatch.breakDuration);
 });
 
 buttonStop.addEventListener('click', () => {

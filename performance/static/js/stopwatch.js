@@ -135,67 +135,6 @@ class Stopwatch{
         this.timerValueElement.setAttribute("value", `${this.hours}:${this.minutes}:${this.seconds}`);
     }
 
-    stopwatchReversed(){
-        console.log(this.timerValueElement.value);
-        this.timerValueElement.removeAttribute("value");
-
-        if(this.minutes == 0 && this.seconds == 0){
-            this.hours--;
-            this.minutes = 59;
-            this.seconds = 60;
-            
-            if(this.hours <= 9){
-                this.displayMinutesElement.innerHTML = "0" + this.minutes;
-            } else {
-                this.displayMinutesElement.innerHTML = this.minutes;
-            }
-        }
-
-        if(this.seconds == 0){
-            this.minutes--;
-            this.seconds = 60;
-
-            if(this.minutes <= 9){
-                this.displayMinutesElement.innerHTML = "0" + this.minutes;
-            } else {
-                this.displayMinutesElement.innerHTML = this.minutes;
-            }
-        }
-
-        this.seconds--;
-
-        if(this.seconds <= 9){
-            this.displaySecondsElement.innerHTML = "0" + this.seconds;
-        } else {
-            this.displaySecondsElement.innerHTML = this.seconds;
-        }
-
-        if(this.minutes <= 9){
-            this.displayMinutesElement.innerHTML = "0" + this.minutes;
-        }
-
-        if(this.hours <= 9){
-            this.displayHoursElement.innerHTML = "0" + this.hours;
-        }
-
-        if(this.hours == 0 && this.minutes == 0 && this.seconds == 0){
-            clearInterval(this.interval);
-        }
-
-
-
-        this.timerValueElement.setAttribute("value", `${this.hours}:${this.minutes}:${this.seconds}`);
-    }
-
-    startReversedStopwatch(startHours, startMinutes, startSeconds){
-        this.hours = parseInt(startHours);
-        this.minutes = parseInt(startMinutes);
-        this.seconds = parseInt(startSeconds);
-        this.interval = setInterval(this.stopwatchReversed.bind(this), 1000);
-        return 0;
-
-    }
-
     startStopwatch(){
         this.interval = setInterval(this.stopwatch.bind(this), 1000);
     }
@@ -212,12 +151,6 @@ class Stopwatch{
         this.displaySecondsElement.innerHTML = "0" + seconds;
         this.displayMinutesElement.innerHTML = "0" + minutes;
         this.displayHoursElement = "0" + hours;
-    }
-
-    pomodoro(){
-        const workDuration = this.workDuration.split(':');
-        const breakDuration = this.breakDuration.split(':');
-        this.startReversedStopwatch(workDuration[0], workDuration[1], workDuration[2]);
     }
 }
 
