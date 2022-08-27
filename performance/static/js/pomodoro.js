@@ -22,17 +22,29 @@ const stopwatch = new Stopwatch.Builder()
     .setPomodoro(cookie)
     .build();
 
+console.log(`This is flag: ${stopwatch.waitFlag}`);
 
+const startHandler = function(){
+    let click = 0;
+    return function (){
+        if(click === 0) {
+            console.log("first click");
+            pomodoroMethods.pomodoroCycle(pomodoroMethods.startReversedStopwatch, stopwatch,  stopwatch.pomodoroIntervals,
+                stopwatch.workDuration, stopwatch.breakDuration);
+        } else {
+            console.log("next click");
+            pomodoroMethods.continueReversedStopwatch(stopwatch);
+        }
+        click++;
+    }
+}();
 
-buttonStart.addEventListener('click', () => {
-    pomodoroMethods.pomodoro(pomodoroMethods.startReversedStopwatch, stopwatch,  stopwatch.pomodoroIntervals,
-         stopwatch.workDuration, stopwatch.breakDuration);
-});
+buttonStart.addEventListener('click', startHandler);
 
 buttonStop.addEventListener('click', () => {
-    stopwatch.stop();
+    pomodoroMethods.stopReversedStopwatch(stopwatch);
 });
 
 buttonReset.addEventListener('click', () => {
-    stopwatch.reset();
+    stopwatch.resetStopwatch();
 });

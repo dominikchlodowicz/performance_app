@@ -1,6 +1,24 @@
 class pomodoroMethods {
 
-    static stopwatchReversed(stopwatchInstance){
+    static wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    static async freezeReversedStopwatch(stopwatchInstance){
+        console.log(`flag status ${stopwatchInstance.waitFlag}`);
+        if(stopwatchInstance.waitFlag === true){
+            const t = setTimeout(() => {
+                if(stopwatchInstance.waitFlag === false){
+                    console.log("clearing Timeout");
+                    clearTimeout(t);
+                } else {
+                    console.log('freezing');
+                    pomodoroMethods.wait(100);
+                }
+            }, 1000)
+        }
+    }
+
+    static async reversedStopwatch(stopwatchInstance){
+        console.log(`Current values ${stopwatchInstance.hours}:${stopwatchInstance.minutes}:${stopwatchInstance.seconds}`);
         stopwatchInstance.timerValueElement.removeAttribute("value");
     
         if(stopwatchInstance.minutes == 0 && stopwatchInstance.seconds == 0){
@@ -47,46 +65,53 @@ class pomodoroMethods {
         }
     
         stopwatchInstance.timerValueElement.setAttribute("value", `${stopwatchInstance.hours}:${stopwatchInstance.minutes}:${stopwatchInstance.seconds}`);
+        
+        pomodoroMethods.freezeReversedStopwatch(stopwatchInstance);
+
     };
 
     static startReversedStopwatch(stopwatchInstance, time){
-        console.log(`This is hours property ${stopwatchInstance.hours}`);
         var splittedTime = time.split(":");
-        var startHours = splittedTime[0]; 
-        var startMinutes = splittedTime[1];
-        var startSeconds = splittedTime[2];
-        stopwatchInstance.hours = parseInt(startHours);
-        stopwatchInstance.minutes = parseInt(startMinutes);
-        stopwatchInstance.seconds = parseInt(startSeconds);
-        stopwatchInstance.interval = setInterval(() => { pomodoroMethods.stopwatchReversed(stopwatchInstance) }, 1000);
+        // setting pomodoro start values
+        stopwatchInstance.hours = parseInt(splittedTime[0]); 
+        stopwatchInstance.minutes = parseInt(splittedTime[1]);
+        stopwatchInstance.seconds = parseInt(splittedTime[2]);
+        console.log(`These are the work values ${stopwatchInstance.hours}:${stopwatchInstance.minutes}:${stopwatchInstance.seconds}`);
+        stopwatchInstance.interval = setInterval(() => { pomodoroMethods.reversedStopwatch(stopwatchInstance) }, 1000);
     };
+
+    static continueReversedStopwatch(stopwatchInstance){
+        console.log(stopwatchInstance.waitFlag);
+        stopwatchInstance.waitFlag = false;
+    };
+
+    static stopReversedStopwatch(stopwatchInstance){
+        console.log("stopping");
+        stopwatchInstance.waitFlag = true;
+    }
 
     static turnTimeIntoMs(time){
         const splittedTime = time.split(":");
         if(splittedTime[0] == "00"){
-            console.log(`This is ms value: ${splittedTime[1]}`);
             return splittedTime[1] * 60000
         } else {
-            console.log(`This is s value: ${time[0] * 3600000}`);
             return splittedTime[0] * 3600000
         }
-    }
+    };
     
-    static wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
-    
-    static pomodoro = async (stopwatchStarter, stopwatchInstance, cycles, workTime, breakTime) => {
+    static pomodoroCycle = async (stopwatchStarter, stopwatchInstance, cycles, workTime, breakTime) => {
         for(var cycle = 1; cycle <= cycles; cycle++){
             if(cycle < cycles){
-                stopwatchStarter(stopwatchInstance, workTime);
+                await stopwatchStarter(stopwatchInstance, workTime);
                 await pomodoroMethods.wait(pomodoroMethods.turnTimeIntoMs(workTime));
-                stopwatchStarter(stopwatchInstance, breakTime);
+                await stopwatchStarter(stopwatchInstance, breakTime);
                 await pomodoroMethods.wait(pomodoroMethods.turnTimeIntoMs(breakTime));
             } else {
-                stopwatchStarter(stopwatchInstance, workTime);
+                await stopwatchStarter(stopwatchInstance, workTime, clickTimes);
                 await pomodoroMethods.wait(pomodoroMethods.turnTimeIntoMs(workTime));
             }
         }
     }
-}
+};
 
 export {pomodoroMethods};

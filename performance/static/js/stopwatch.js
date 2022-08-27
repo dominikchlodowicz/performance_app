@@ -12,6 +12,7 @@ class Stopwatch{
     pomodoroIntervals = null
     workDuration = null
     breakDuration = null
+    waitFlag = null
 
     static Builder = class {
 
@@ -25,6 +26,7 @@ class Stopwatch{
         pomodoroIntervals = null
         workDuration = null
         breakDuration = null
+        waitFlag = null
 
         setTime(hours, minutes, seconds){
             this.hours = hours;
@@ -62,6 +64,7 @@ class Stopwatch{
             this.pomodoroIntervals = cookies["intervals"];
             this.workDuration = cookies["workDuration"];
             this.breakDuration = cookies["breakDuration"];
+            this.waitFlag = false;
             return this
         }
 
@@ -77,14 +80,15 @@ class Stopwatch{
                 this.interval,
                 this.pomodoroIntervals,
                 this.workDuration,
-                this.breakDuration)
+                this.breakDuration,
+                this.waitFlag)
             return stopwatch  
         }
     }
 
     constructor(hours, minutes, seconds, displayHoursElement, displayMinutesElement
         ,displaySecondsElement, timerValueElement, interval, pomodoroIntervals, workDuration
-        ,breakDuration){
+        ,breakDuration, waitFlag){
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
@@ -96,6 +100,7 @@ class Stopwatch{
         this.pomodoroIntervals = pomodoroIntervals;
         this.workDuration = workDuration;
         this.breakDuration = breakDuration;
+        this.waitFlag = waitFlag;
     }
 
     stopwatch(){
@@ -139,11 +144,11 @@ class Stopwatch{
         this.interval = setInterval(this.stopwatch.bind(this), 1000);
     }
 
-    stop(){
+    stopStopwatch(){
         clearInterval(this.interval);
     }
 
-    reset(){
+    resetStopwatch(){
         clearInterval(this.interval);
         this.hours = 0;
         this.minutes = 0;
