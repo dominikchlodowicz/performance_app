@@ -2,72 +2,58 @@ class pomodoroMethods {
 
     static wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-    static async freezeReversedStopwatch(stopwatchInstance){
-        console.log(`flag status ${stopwatchInstance.waitFlag}`);
-        if(stopwatchInstance.waitFlag === true){
-            const t = setTimeout(() => {
-                if(stopwatchInstance.waitFlag === false){
-                    console.log("clearing Timeout");
-                    clearTimeout(t);
-                } else {
-                    console.log('freezing');
-                    pomodoroMethods.wait(100);
-                }
-            }, 1000)
-        }
-    }
-
     static async reversedStopwatch(stopwatchInstance){
-        console.log(`Current values ${stopwatchInstance.hours}:${stopwatchInstance.minutes}:${stopwatchInstance.seconds}`);
-        stopwatchInstance.timerValueElement.removeAttribute("value");
-    
-        if(stopwatchInstance.minutes == 0 && stopwatchInstance.seconds == 0){
-            stopwatchInstance.hours--;
-            stopwatchInstance.minutes = 59;
-            stopwatchInstance.seconds = 60;
-            
-            if(stopwatchInstance.hours <= 9){
-                stopwatchInstance.displayMinutesElement.innerHTML = "0" + stopwatchInstance.minutes;
-            } else {
-                stopwatchInstance.displayMinutesElement.innerHTML = stopwatchInstance.minutes;
+        if(stopwatchInstance.waitFlag){
+            console.log("waiting")
+        } else {
+            console.log(`Current values ${stopwatchInstance.hours}:${stopwatchInstance.minutes}:${stopwatchInstance.seconds}`);
+            stopwatchInstance.timerValueElement.removeAttribute("value");
+        
+            if(stopwatchInstance.minutes == 0 && stopwatchInstance.seconds == 0){
+                stopwatchInstance.hours--;
+                stopwatchInstance.minutes = 59;
+                stopwatchInstance.seconds = 60;
+                
+                if(stopwatchInstance.hours <= 9){
+                    stopwatchInstance.displayMinutesElement.innerHTML = "0" + stopwatchInstance.minutes;
+                } else {
+                    stopwatchInstance.displayMinutesElement.innerHTML = stopwatchInstance.minutes;
+                }
             }
-        }
-    
-        if(stopwatchInstance.seconds == 0){
-            stopwatchInstance.minutes--;
-            stopwatchInstance.seconds = 60;
-    
+        
+            if(stopwatchInstance.seconds == 0){
+                stopwatchInstance.minutes--;
+                stopwatchInstance.seconds = 60;
+        
+                if(stopwatchInstance.minutes <= 9){
+                    stopwatchInstance.displayMinutesElement.innerHTML = "0" + stopwatchInstance.minutes;
+                } else {
+                    stopwatchInstance.displayMinutesElement.innerHTML = stopwatchInstance.minutes;
+                }
+            }
+            stopwatchInstance.seconds--;
+        
+            if(stopwatchInstance.seconds <= 9){
+                stopwatchInstance.displaySecondsElement.innerHTML = "0" + stopwatchInstance.seconds;
+            } else {
+                stopwatchInstance.displaySecondsElement.innerHTML = stopwatchInstance.seconds;
+            }
+        
             if(stopwatchInstance.minutes <= 9){
                 stopwatchInstance.displayMinutesElement.innerHTML = "0" + stopwatchInstance.minutes;
-            } else {
-                stopwatchInstance.displayMinutesElement.innerHTML = stopwatchInstance.minutes;
             }
-        }
-        stopwatchInstance.seconds--;
-    
-        if(stopwatchInstance.seconds <= 9){
-            stopwatchInstance.displaySecondsElement.innerHTML = "0" + stopwatchInstance.seconds;
-        } else {
-            stopwatchInstance.displaySecondsElement.innerHTML = stopwatchInstance.seconds;
-        }
-    
-        if(stopwatchInstance.minutes <= 9){
-            stopwatchInstance.displayMinutesElement.innerHTML = "0" + stopwatchInstance.minutes;
-        }
-    
-        if(stopwatchInstance.hours <= 9){
-            stopwatchInstance.displayHoursElement.innerHTML = "0" + stopwatchInstance.hours;
-        }
-    
-        if(stopwatchInstance.hours == 0 && stopwatchInstance.minutes == 0 && stopwatchInstance.seconds == 0){
-            console.log("End of the interval");
-            clearInterval(stopwatchInstance.interval);
-        }
-    
-        stopwatchInstance.timerValueElement.setAttribute("value", `${stopwatchInstance.hours}:${stopwatchInstance.minutes}:${stopwatchInstance.seconds}`);
         
-        pomodoroMethods.freezeReversedStopwatch(stopwatchInstance);
-
+            if(stopwatchInstance.hours <= 9){
+                stopwatchInstance.displayHoursElement.innerHTML = "0" + stopwatchInstance.hours;
+            }
+        
+            if(stopwatchInstance.hours == 0 && stopwatchInstance.minutes == 0 && stopwatchInstance.seconds == 0){
+                console.log("End of the interval");
+                clearInterval(stopwatchInstance.interval);
+            }
+        
+            stopwatchInstance.timerValueElement.setAttribute("value", `${stopwatchInstance.hours}:${stopwatchInstance.minutes}:${stopwatchInstance.seconds}`);
+        }
     };
 
     static startReversedStopwatch(stopwatchInstance, time){
