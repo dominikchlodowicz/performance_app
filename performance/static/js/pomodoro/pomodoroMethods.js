@@ -3,9 +3,7 @@ class pomodoroMethods {
     static wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     static async reversedStopwatch(stopwatchInstance){
-        if(stopwatchInstance.waitFlag){
-            console.log("waiting")
-        } else {
+        if(stopwatchInstance.waitFlag === false) {
             console.log(`Current values ${stopwatchInstance.hours}:${stopwatchInstance.minutes}:${stopwatchInstance.seconds}`);
             stopwatchInstance.timerValueElement.removeAttribute("value");
         

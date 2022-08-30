@@ -1,7 +1,7 @@
 from flask import render_template, session, request
 from . import main
-from ..stopwatch.stopwatch_handling import view_time
-from ..pomodoro.pomodoro_config_handling import validate_form_data
+from ..stopwatch.stopwatch_helper import timer_helper
+from ..pomodoro.pomodoro_config_helper import validate_form_data
 import uuid
 
 @main.before_app_first_request
@@ -16,7 +16,7 @@ def index():
 
 @main.route('/timer', methods=["GET", "POST"])
 def timer():
-     return view_time('timer', 'timer.html')
+     return timer_helper('timer', 'timer.html')
 
 @main.route('/pomodoroconfig', methods=["GET", "POST"])
 def pomodoroconfig():          

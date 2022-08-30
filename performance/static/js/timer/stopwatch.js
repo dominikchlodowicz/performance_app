@@ -1,4 +1,4 @@
-import { getCookie } from "./getCookie.js";
+import { getCookie } from "../getCookie.js";
 
 class Stopwatch{
 

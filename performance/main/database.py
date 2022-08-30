@@ -1,6 +1,5 @@
 from sqlite3 import connect
-from flask import current_app, g
-from . import main
+from flask import g
 from config import config
 
 def get_db():
@@ -9,7 +8,7 @@ def get_db():
         db = g._database = connect(config["database"])
     return db
 
-def insert_time(id, hours = 0, minutes = 0, seconds = 0) -> None:
+def insert_db(id, hours = 0, minutes = 0, seconds = 0) -> None:
     db = get_db()
     cur = db.cursor()
     checking_database = cur.execute('SELECT * FROM time WHERE ID LIKE(?)', (id,)).fetchone()
@@ -28,7 +27,7 @@ def small_time_value(value):
     else:
         return value
 
-def get_time(id):
+def get_value_db(id):
     db = get_db()
     cur = db.cursor()
     cur.execute('SELECT * FROM time WHERE ID LIKE (?)', (id,))
