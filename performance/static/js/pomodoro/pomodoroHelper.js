@@ -1,5 +1,5 @@
 import { Stopwatch } from '../timer/stopwatch.js';
-import { pomodoroMethods } from './pomodoroMethods.js';
+import { Pomodoro } from './pomodoro.js';
 
 var hours = 0;
 var minutes = 0;
@@ -22,14 +22,15 @@ const stopwatch = new Stopwatch.Builder()
     .setPomodoro(cookie)
     .build();
 
+const pomodoro = new Pomodoro(stopwatch)
+
 const startHandler = function(){
     let click = 0;
     return function (){
         if(click === 0) {
-            pomodoroMethods.pomodoroCycle(pomodoroMethods.startReversedStopwatch, stopwatch,  stopwatch.pomodoroIntervals,
-                stopwatch.workDuration, stopwatch.breakDuration);
+            pomodoro.pomodoroCycle(pomodoro.startReversedStopwatch);
         } else {
-            pomodoroMethods.continueReversedStopwatch(stopwatch);
+            pomodoroMethods.continueReversedStopwatch();
         }
         click++;
     }
@@ -38,7 +39,7 @@ const startHandler = function(){
 buttonStart.addEventListener('click', startHandler);
 
 buttonStop.addEventListener('click', () => {
-    pomodoroMethods.stopReversedStopwatch(stopwatch);
+    pomodoroMethods.stopReversedStopwatch();
 });
 
 buttonReset.addEventListener('click', () => {
