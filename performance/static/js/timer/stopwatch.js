@@ -1,4 +1,4 @@
-import { getCookie } from "../getCookie.js";
+import { getCookie } from '../get-cookie.js'
 
 class Stopwatch{
 
@@ -23,7 +23,7 @@ class Stopwatch{
         displayHoursElement = null
         displayMinutesElement = null
         displaySecondsElement = null
-        pomodoroIntervals = null
+        cycles = null
         workDuration = null
         breakDuration = null
         waitFlag = null
@@ -53,7 +53,7 @@ class Stopwatch{
         }
 
         setNoPomodoro(){
-            this.pomodoroIntervals = 0;
+            this.cycles = 0;
             this.workDuration = 0;
             this.breakDuration = 0;
             return this
@@ -61,7 +61,7 @@ class Stopwatch{
 
         setPomodoro(cookie){
             var cookies = getCookie(cookie);
-            this.pomodoroIntervals = cookies["intervals"];
+            this.cycles = parseInt(cookies["cycles"]);
             this.workDuration = cookies["workDuration"];
             this.breakDuration = cookies["breakDuration"];
             this.waitFlag = false;
@@ -78,16 +78,17 @@ class Stopwatch{
                 this.displaySecondsElement,
                 this.timerValueElement,
                 this.interval,
-                this.pomodoroIntervals,
+                this.cycles,
                 this.workDuration,
                 this.breakDuration,
-                this.waitFlag)
+                this.waitFlag
+            )
             return stopwatch  
         }
     }
 
     constructor(hours, minutes, seconds, displayHoursElement, displayMinutesElement
-        ,displaySecondsElement, timerValueElement, interval, pomodoroIntervals, workDuration
+        ,displaySecondsElement, timerValueElement, interval, cycles, workDuration
         ,breakDuration, waitFlag){
         this.hours = hours;
         this.minutes = minutes;
@@ -97,7 +98,7 @@ class Stopwatch{
         this.displaySecondsElement = displaySecondsElement;
         this.timerValueElement = timerValueElement;
         this.interval = interval;
-        this.pomodoroIntervals = pomodoroIntervals;
+        this.cycles = cycles;
         this.workDuration = workDuration;
         this.breakDuration = breakDuration;
         this.waitFlag = waitFlag;
@@ -153,9 +154,6 @@ class Stopwatch{
         this.hours = 0;
         this.minutes = 0;
         this.seconds = 0;
-        this.displaySecondsElement.innerHTML = "0" + seconds;
-        this.displayMinutesElement.innerHTML = "0" + minutes;
-        this.displayHoursElement = "0" + hours;
     }
 }
 

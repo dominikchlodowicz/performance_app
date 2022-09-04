@@ -1,14 +1,13 @@
+import { wait, turnTimeIntoMs } from '../tools.js'
+
 class Pomodoro{
 
     constructor(stopwatchInstance){
         this.stopwatch = stopwatchInstance;
     }
 
-    static wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
     async reversedStopwatch(){
         if(this.stopwatch.waitFlag === false) {
-            console.log(`Current values ${this.stopwatch.hours}:${this.stopwatch.minutes}:${this.stopwatch.seconds}`);
             this.stopwatch.timerValueElement.removeAttribute("value");
         
             if(this.stopwatch.minutes == 0 && this.stopwatch.seconds == 0){
@@ -50,7 +49,6 @@ class Pomodoro{
             }
         
             if(this.stopwatch.hours == 0 && this.stopwatch.minutes == 0 && this.stopwatch.seconds == 0){
-                console.log("End of the interval");
                 clearInterval(this.stopwatch.interval);
             }
         
@@ -64,7 +62,6 @@ class Pomodoro{
         this.stopwatch.hours = parseInt(splittedTime[0]); 
         this.stopwatch.minutes = parseInt(splittedTime[1]);
         this.stopwatch.seconds = parseInt(splittedTime[2]);
-        console.log(`These are the work values ${this.stopwatch.hours}:${this.stopwatch.minutes}:${this.stopwatch.seconds}`);
         this.stopwatch.interval = setInterval(() => { this.reversedStopwatch(this.stopwatch) }, 1000);
     };
 
@@ -73,29 +70,19 @@ class Pomodoro{
     };
 
     stopReversedStopwatch(){
-        console.log("stopping");
         this.stopwatch.waitFlag = true;
     }
-
-    turnTimeIntoMs(time){
-        const splittedTime = time.split(":");
-        if(splittedTime[0] == "00"){
-            return splittedTime[1] * 60000
-        } else {
-            return splittedTime[0] * 3600000
-        }
-    };
     
-    pomodoroCycle = async (stopwatchStarter) => {
+    pomodoroCycle = async () => {
         for(var cycle = 1; cycle <= this.stopwatch.cycles; cycle++){
             if(cycle < this.stopwatch.cycles){
-                await stopwatchStarter(this.stopwatch.workTime);
-                await Pomodoro.wait(this.turnTimeIntoMs(this.stopwatch.workTime));
-                await stopwatchStarter(this.stopwatch.breakTime);
-                await Pomodoro.wait(this.turnTimeIntoMs(this.stopwatch.breakTime));
+                this.startReversedStopwatch(this.stopwatch.workDuration);
+                await wait(turnTimeIntoMs(this.stopwatch.workDuration));
+                this.startReversedStopwatch(this.stopwatch.breakDuration);
+                await wait(turnTimeIntoMs(this.stopwatch.breakDuration));
             } else {
-                await stopwatchStarter(this.stopwatch.workTime, clickTimes);
-                await Pomodoro.wait(this.turnTimeIntoMs(this.stopwatch.workTime));
+                this.startReversedStopwatch(this.stopwatch.workDuration);
+                await wait(turnTimeIntoMs(this.stopwatch.workDuration));
             }
         }
     }

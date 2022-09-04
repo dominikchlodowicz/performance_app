@@ -22,7 +22,7 @@ def timer():
 def pomodoroconfig():          
      if request.method == 'POST':
           # form elements list
-          pomodoro_config_values = ('intervals',('workDuration', 'workDurationHrOrMin'), ('breakDuration' ,'breakDurationHrOrMin'))
+          pomodoro_config_values = ('cycles',('workDuration', 'workDurationHrOrMin'), ('breakDuration' ,'breakDurationHrOrMin'))
           return validate_form_data(pomodoro_config_values)
 
      elif request.method == 'GET':

@@ -28,9 +28,9 @@ const startHandler = function(){
     let click = 0;
     return function (){
         if(click === 0) {
-            pomodoro.pomodoroCycle(pomodoro.startReversedStopwatch);
+            pomodoro.pomodoroCycle();
         } else {
-            pomodoroMethods.continueReversedStopwatch();
+            pomodoro.continueReversedStopwatch();
         }
         click++;
     }
@@ -39,7 +39,7 @@ const startHandler = function(){
 buttonStart.addEventListener('click', startHandler);
 
 buttonStop.addEventListener('click', () => {
-    pomodoroMethods.stopReversedStopwatch();
+    pomodoro.stopReversedStopwatch();
 });
 
 buttonReset.addEventListener('click', () => {

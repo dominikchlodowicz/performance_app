@@ -33,9 +33,6 @@ def get_time(user_id, template):
             return render_template(template)
 
 def timer_helper(route, template):
-    print(f'This is route: {route}')
-    print(f'This is template: {template}')
-
     #try to get cookie
     cookie_user_id = request.cookies.get('user_id')
 
