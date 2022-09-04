@@ -8,3 +8,7 @@ export function turnTimeIntoMs(time){
 };
 
 export const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+export function waitTimeManipulation(pomodoroCallStack, blockId){
+    pomodoroCallStack[blockId].push(wait(1000));
+}

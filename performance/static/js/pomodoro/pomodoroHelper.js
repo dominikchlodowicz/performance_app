@@ -24,19 +24,19 @@ const stopwatch = new Stopwatch.Builder()
 
 const pomodoro = new Pomodoro(stopwatch)
 
-const startHandler = function(){
-    let click = 0;
-    return function (){
-        if(click === 0) {
-            pomodoro.pomodoroCycle();
-        } else {
-            pomodoro.continueReversedStopwatch();
-        }
-        click++;
-    }
-}();
+// const startHandler = function(){
+//     let click = 0;
+//     return function (){
+//         if(click === 0) {
+//             pomodoro.pomodoroCycle();
+//         } else {
+//             pomodoro.continueReversedStopwatch();
+//         }
+//         click++;
+//     }
+// }();
 
-buttonStart.addEventListener('click', startHandler);
+buttonStart.addEventListener('click', pomodoro.pomodoroCycle);
 
 buttonStop.addEventListener('click', () => {
     pomodoro.stopReversedStopwatch();

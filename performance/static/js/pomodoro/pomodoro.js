@@ -4,6 +4,7 @@ class Pomodoro{
 
     constructor(stopwatchInstance){
         this.stopwatch = stopwatchInstance;
+        this.pomodoroCallStack = [];
     }
 
     async reversedStopwatch(){
@@ -72,19 +73,40 @@ class Pomodoro{
     stopReversedStopwatch(){
         this.stopwatch.waitFlag = true;
     }
-    
-    pomodoroCycle = async () => {
+
+    pomodoroStackCreator(){
         for(var cycle = 1; cycle <= this.stopwatch.cycles; cycle++){
             if(cycle < this.stopwatch.cycles){
-                this.startReversedStopwatch(this.stopwatch.workDuration);
-                await wait(turnTimeIntoMs(this.stopwatch.workDuration));
-                this.startReversedStopwatch(this.stopwatch.breakDuration);
-                await wait(turnTimeIntoMs(this.stopwatch.breakDuration));
+                this.pomodoroCallStack.push([this.startReversedStopwatch(this.stopwatch.workDuration),  wait(this.stopwatch.workDuration)]);
+                this.pomodoroCallStack.push([this.startReversedStopwatch(this.stopwatch.breakDuration),  wait(this.stopwatch.breakDuration)]);
             } else {
-                this.startReversedStopwatch(this.stopwatch.workDuration);
-                await wait(turnTimeIntoMs(this.stopwatch.workDuration));
+                this.pomodoroCallStack.push([this.startReversedStopwatch(this.stopwatch.workDuration),  wait(this.stopwatch.workDuration)]);
             }
         }
+    }
+    
+    
+    // pomodoroCycle = async () => {
+    //     for(var cycle = 1; cycle <= this.stopwatch.cycles; cycle++){
+    //         if(cycle < this.stopwatch.cycles){
+    //             this.startReversedStopwatch(this.stopwatch.workDuration);
+    //             await wait(turnTimeIntoMs(this.stopwatch.workDuration));
+    //             this.startReversedStopwatch(this.stopwatch.breakDuration);
+    //             await wait(turnTimeIntoMs(this.stopwatch.breakDuration));
+    //         } else {
+    //             this.startReversedStopwatch(this.stopwatch.workDuration);
+    //             await wait(turnTimeIntoMs(this.stopwatch.workDuration));
+    //         }
+    //     }
+    // }
+
+    pomodoroCycle = async() => {
+        this.pomodoroStackCreator();
+        // for(var block_id = 0; block_id <= this.pomodoroCallStack.length; block_id++){
+        //     for(const action in this.pomodoroCallStack[block_id]){
+        //         await action;
+        //     }
+        // }
     }
 };
 
