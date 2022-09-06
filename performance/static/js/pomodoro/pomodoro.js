@@ -4,6 +4,8 @@ class Pomodoro{
 
     constructor(stopwatchInstance){
         this.stopwatch = stopwatchInstance;
+        //
+        this.block_id = null;
         // stack of pomodoro actions
         this.pomodoroCallStack = [];
     }
@@ -55,20 +57,18 @@ class Pomodoro{
             }
         
             this.stopwatch.timerValueElement.setAttribute("value", `${this.stopwatch.hours}:${this.stopwatch.minutes}:${this.stopwatch.seconds}`);
+        } else {
+            this.pomodoroCallStack[this.block_id].push("waitSecond"); // dodaj waitSec
         }
     };
 
     startReversedStopwatch(time){
-        const start = () => {
-            var splittedTime = time.split(":");
-            // setting pomodoro start values
-            this.stopwatch.hours = parseInt(splittedTime[0]); 
-            this.stopwatch.minutes = parseInt(splittedTime[1]);
-            this.stopwatch.seconds = parseInt(splittedTime[2]);
-            this.stopwatch.interval = setInterval(() => { this.reversedStopwatch(this.stopwatch) }, 1000);
-            console.log("run startReversedStopwatch");
-        }
-        return start
+        var splittedTime = time.split(":");
+        // setting pomodoro start values
+        this.stopwatch.hours = parseInt(splittedTime[0]); 
+        this.stopwatch.minutes = parseInt(splittedTime[1]);
+        this.stopwatch.seconds = parseInt(splittedTime[2]);
+        this.stopwatch.interval = setInterval(() => { this.reversedStopwatch(this.stopwatch) }, 1000);
     };
 
     continueReversedStopwatch(){
@@ -83,17 +83,17 @@ class Pomodoro{
         for(var cycle = 1; cycle <= this.stopwatch.cycles; cycle++){
             if(cycle < this.stopwatch.cycles){
                 this.pomodoroCallStack.push([
-                    this.startReversedStopwatch.call(this, this.stopwatch.workDuration),
-                    wait(turnTimeIntoMs(this.stopwatch.workDuration))
+                    "work",
+                    "waitWork"
                 ]);
                 this.pomodoroCallStack.push([
-                    this.startReversedStopwatch.call(this, this.stopwatch.breakDuration),
-                    wait(turnTimeIntoMs(this.stopwatch.breakDuration))
+                    "break",
+                    "waitBreak"
                 ]);
             } else {
                 this.pomodoroCallStack.push([
-                    this.startReversedStopwatch.call(this, this.stopwatch.workDuration),
-                    wait(turnTimeIntoMs(this.stopwatch.workDuration))
+                    "work",
+                    "waitWork"
                 ]);
             }
         }
@@ -102,18 +102,27 @@ class Pomodoro{
     pomodoroCycle = async() => {
         this.pomodoroStackCreator();
         for(var block_id = 0; block_id < this.pomodoroCallStack.length; block_id++){
-            for(var function_id = 0; function_id < this.pomodoroCallStack[block_id].length; function_id++){
-                let action = this.pomodoroCallStack[block_id][function_id];
-                console.log(function_id);
-                console.log(`action type: ${typeof(this.pomodoroCallStack[block_id][function_id])}`);
-                const pomodoroFunc = async (action) => {
-                    if(block_id == 1){
-                        await action.call(this);
-                    } else {
-                        action.call(this);
-                    }
-                };
-                pomodoroFunc(action);
+            this.block_id = block_id;
+            for(var action_id = 0; action_id < this.pomodoroCallStack[block_id].length; action_id++){
+                switch(this.pomodoroCallStack[block_id][action_id]){
+                    case "work":
+                        this.startReversedStopwatch(this.stopwatch.workDuration);
+                        break;
+                    case "break":
+                        this.startReversedStopwatch(this.stopwatch.breakDuration);
+                        break;
+                    case "waitWork":
+                        await wait(turnTimeIntoMs(this.stopwatch.workDuration));
+                        break;
+                    case "waitBreak":
+                        await wait(turnTimeIntoMs(this.stopwatch.breakDuration));
+                        break;
+                    case "waitSecond":
+                        await wait(1000);
+                        break;
+                    default:
+                        throw new Error("Switch statement found unknown type of action");
+                }
             }
         }
     }
