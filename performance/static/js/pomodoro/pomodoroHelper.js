@@ -10,19 +10,19 @@ var displaySeconds = document.getElementById("seconds");
 var buttonStart = document.getElementById("start");
 var buttonStop = document.getElementById("stop");
 var buttonReset = document.getElementById("reset");
-var timerValue = document.getElementById("timerValue");
+var workTimeValue = document.getElementById("workTimeValue");
 
 var cookie = document.cookie;
 
 const stopwatch = new Stopwatch.Builder()
     .setTime(hours, minutes, seconds)
     .setTimeDisplay(displayHours, displayMinutes, displaySeconds)
-    .setDataPassElement(timerValue)
+    .setNoDataPassElementStopwatch()
     .setIntervalElement()
     .setPomodoro(cookie)
     .build();
 
-const pomodoro = new Pomodoro(stopwatch)
+const pomodoro = new Pomodoro(stopwatch, workTimeValue, buttonReset)
 
 const startHandler = function(){
     let click = 0;
@@ -43,5 +43,6 @@ buttonStop.addEventListener('click', () => {
 });
 
 buttonReset.addEventListener('click', () => {
+    console.log(workTimeValue.value)
     stopwatch.resetStopwatch();
 });

@@ -9,6 +9,7 @@ class Stopwatch{
     displayHoursElement = null
     displayMinutesElement = null
     displaySecondsElement = null
+    cycles = null
     pomodoroIntervals = null
     workDuration = null
     breakDuration = null
@@ -42,8 +43,13 @@ class Stopwatch{
             return this
         }
 
-        setDataPassElement(timerValueElement){
+        setDataPassElementStopwatch(timerValueElement){
             this.timerValueElement = timerValueElement;
+            return this
+        }
+
+        setNoDataPassElementStopwatch(){
+            this.timerValueElement = null;
             return this
         }
 

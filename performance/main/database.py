@@ -8,18 +8,34 @@ def get_db():
         db = g._database = connect(config["database"])
     return db
 
-def insert_db(id, hours = 0, minutes = 0, seconds = 0) -> None:
+def insert_db(tableName, id, hours = 0, minutes = 0, seconds = 0) -> None:
     db = get_db()
     cur = db.cursor()
-    checking_database = cur.execute('SELECT * FROM time WHERE ID LIKE(?)', (id,)).fetchone()
-    if checking_database != None:
-        cur.execute('''UPDATE time SET hours = (?), minutes = (?), seconds = (?)
-        WHERE ID = (?)''', (hours, minutes, seconds, id))
+    
+    if tableName == "stopwatch":
+        checking_database = cur.execute('SELECT * FROM stopwatch WHERE id LIKE(?)', (id, )).fetchone()
+
+        if checking_database != None:
+            cur.execute('''UPDATE stopwatch SET hours = (?), minutes = (?), seconds = (?)
+            WHERE id = (?)''', (hours, minutes, seconds, id))
+        else:
+            cur.execute('INSERT INTO stopwatch VALUES(?, ?, ?, ?)', (id, hours, minutes, seconds))
+
+    elif tableName == "pomodoro":
+        checking_database = cur.execute('SELECT * FROM pomodoro WHERE id LIKE(?)', (id, )).fetchone()
+
+        if checking_database != None:
+            cur.execute('''UPDATE pomodoro SET hours = (?), minutes = (?), seconds = (?)
+            WHERE id = (?)''', (hours, minutes, seconds, id))
+        else:
+            cur.execute('INSERT INTO pomodoro VALUES(?, ?, ?, ?)', (id, hours, minutes, seconds))
     else:
-        cur.execute('INSERT INTO time VALUES(?, ?, ?, ?)', (str(id), hours, minutes, seconds))
+        raise ValueError(f'This {tableName} table doesn\'t exist in database')
+    
     db.commit()
     cur.close()
 
+#this should be in tools.py
 def small_time_value(value):
     val = int(value)
     if val < 10:
@@ -27,10 +43,16 @@ def small_time_value(value):
     else:
         return value
 
-def get_value_db(id):
+def get_value_db(tableName, id):
     db = get_db()
     cur = db.cursor()
-    cur.execute('SELECT * FROM time WHERE ID LIKE (?)', (id,))
+    if tableName == "stopwatch":
+        cur.execute('SELECT * FROM stopwatch WHERE id LIKE (?)', (id, ))
+    elif tableName == "pomodoro":
+        cur.execute('SELECT * FROM pomodoro WHERE id LIKE (?)', (id, ))
+    else:
+        raise ValueError(f'This {tableName} table doesn\'t exist in database')
+
     time = cur.fetchone()
     if time:
         return f'{small_time_value(time[1])}:{small_time_value(time[2])}:{small_time_value(time[3])}'

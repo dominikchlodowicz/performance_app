@@ -1,7 +1,7 @@
 from flask import render_template, session, request
 from . import main
-from ..stopwatch.stopwatch_helper import timer_helper
-from ..pomodoro.pomodoro_config_helper import validate_form_data
+from .work_time_helper import view_helper
+from .pomodoro_config_helper import validate_form_data
 import uuid
 
 @main.before_app_first_request
@@ -12,11 +12,11 @@ def set_user_id():
 
 @main.route('/')
 def index():
-     return render_template('timer.html')
+     return render_template('stopwatch.html')
 
-@main.route('/timer', methods=["GET", "POST"])
-def timer():
-     return timer_helper('timer', 'timer.html')
+@main.route('/stopwatch', methods=["GET", "POST"])
+def stopwatch():
+     return view_helper('stopwatch', 'stopwatch.html')
 
 @main.route('/pomodoroconfig', methods=["GET", "POST"])
 def pomodoroconfig():          
@@ -30,4 +30,4 @@ def pomodoroconfig():
 
 @main.route('/pomodoro', methods=["GET", "POST"])
 def pomodoro():
-     return render_template('pomodoro.html')
+     return view_helper('pomodoro', 'pomodoro.html')

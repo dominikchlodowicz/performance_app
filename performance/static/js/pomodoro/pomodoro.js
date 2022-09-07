@@ -1,19 +1,21 @@
-import { wait, turnTimeIntoMs } from '../tools.js'
+import { wait, turnTimeIntoMs, timeToMinutes, fromMinutesToStringTimeFormat} from '../tools.js'
 
 class Pomodoro{
 
-    constructor(stopwatchInstance){
+    constructor(stopwatchInstance, workTimeElement, resetButton){
         this.stopwatch = stopwatchInstance;
-        //
         this.block_id = null;
         // stack of pomodoro actions
         this.pomodoroCallStack = [];
+
+        //workTime that we display on the next pomodoro cycle
+        this.workTimeElement = workTimeElement;
+        this.workMinutes = null;
+        this.resetButton = resetButton;
     }
 
     async reversedStopwatch(){
-        if(this.stopwatch.waitFlag === false) {
-            this.stopwatch.timerValueElement.removeAttribute("value");
-        
+        if(this.stopwatch.waitFlag === false) {        
             if(this.stopwatch.minutes == 0 && this.stopwatch.seconds == 0){
                 this.stopwatch.hours--;
                 this.stopwatch.minutes = 59;
@@ -54,11 +56,9 @@ class Pomodoro{
         
             if(this.stopwatch.hours == 0 && this.stopwatch.minutes == 0 && this.stopwatch.seconds == 0){
                 clearInterval(this.stopwatch.interval);
-            }
-        
-            this.stopwatch.timerValueElement.setAttribute("value", `${this.stopwatch.hours}:${this.stopwatch.minutes}:${this.stopwatch.seconds}`);
+            }        
         } else {
-            this.pomodoroCallStack[this.block_id].push("waitSecond"); // dodaj waitSec
+            this.pomodoroCallStack[this.block_id].push("waitSecond");
         }
     };
 
@@ -113,6 +113,7 @@ class Pomodoro{
                         break;
                     case "waitWork":
                         await wait(turnTimeIntoMs(this.stopwatch.workDuration));
+                        this.workMinutes += timeToMinutes(this.stopwatch.workDuration)
                         break;
                     case "waitBreak":
                         await wait(turnTimeIntoMs(this.stopwatch.breakDuration));
@@ -125,15 +126,10 @@ class Pomodoro{
                 }
             }
         }
+        this.workTimeElement.removeAttribute("value");
+        this.workTimeElement.setAttribute("value", fromMinutesToStringTimeFormat(this.workMinutes));
+
+        this.resetButton.click()
     }
 };
-
 export {Pomodoro};
-
-
-
-// function func(num){
-//     return function(){
-//       alert(num);
-//     }
-//   }

@@ -1,4 +1,4 @@
-from ..main.validation import validate_time, data_formatting
+from .validation import validate_time, data_formatting
 from flask import redirect, session, request, url_for, make_response
 
 def validate_form_data(pomodoro_config_values):
