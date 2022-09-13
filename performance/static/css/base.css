@@ -1,0 +1,64 @@
+*{
+    font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+
+html, body{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header */
+
+header{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.25);
+    height: 5vh;
+    flex-grow: 1
+}
+
+#header-title{
+    font-weight: 300;
+    padding: 1.5vh;
+}
+
+#navbar-night-mode-icon{
+    padding: 2vh;
+}
+
+/* Main */
+
+main{
+    flex-grow: 80;
+}
+
+/* Footer */
+
+footer{
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.25);
+    height: 5vh;
+}
+
+.footer-elements{
+    font-weight: 300;
+    font-size: 1em;
+    padding: 2vh;
+}
+
+

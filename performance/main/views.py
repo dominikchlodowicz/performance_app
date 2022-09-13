@@ -12,7 +12,7 @@ def set_user_id():
 
 @main.route('/')
 def index():
-     return render_template('stopwatch.html')
+     return render_template('base.html')
 
 @main.route('/stopwatch', methods=["GET", "POST"])
 def stopwatch():
@@ -31,3 +31,7 @@ def pomodoroconfig():
 @main.route('/pomodoro', methods=["GET", "POST"])
 def pomodoro():
      return view_helper('pomodoro', 'pomodoro.html')
+
+@main.route('/about', methods=["GET"])
+def about():
+     return render_template('base.html')
