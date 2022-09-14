@@ -1,0 +1,15 @@
+main, figure{
+    background-color: rgba(118, 114, 114, 0.69);
+}
+
+*{
+    color: #FFFFFF;
+}
+
+#navbar-night-mode-icon{
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(250deg) brightness(102%) contrast(101%);
+}
+
+#navbar-night-mode-icon:hover{
+    filter: drop-shadow(3px 5px 2px rgba(179, 177, 177, 0.4));
+}

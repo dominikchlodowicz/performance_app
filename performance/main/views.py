@@ -12,7 +12,7 @@ def set_user_id():
 
 @main.route('/')
 def index():
-     return render_template('base.html')
+     return render_template('index.html')
 
 @main.route('/stopwatch', methods=["GET", "POST"])
 def stopwatch():

@@ -1,0 +1,53 @@
+*{
+    font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+#main-content{
+    display: flex;
+    justify-content: space-around;
+    min-height: 88vh;
+}
+
+.main-content-images{
+    height: 20vh;
+    margin-top: 20vh;
+}
+
+figure{
+    text-align: center;
+    width: 50vw;
+    transition: 0.3s background-color;
+}
+
+#stopwatch:hover{
+    background-color: rgba(30, 187, 236, 0.19);
+}
+
+#pomodoro:hover{
+    background-color: rgba(216, 112, 147, 0.48);
+}
+
+#stopwatch-image{
+    filter: invert(28%) sepia(65%) saturate(407%) hue-rotate(157deg) 
+    brightness(98%) contrast(89%);
+}
+
+#tomato-image{
+    filter: invert(27%) sepia(60%) saturate(470%) hue-rotate(300deg) 
+    brightness(94%) contrast(101%);
+}
+
+p{
+    display: block;
+    margin-top: 5vh;
+    font-size: 2em;
+}
+
+hr{
+    border: 1px solid #E0D7D7;
+}
+
+

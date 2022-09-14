@@ -1,0 +1,22 @@
+{% extends "./base.html" %}
+{% block second_stylesheet %}
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id="main-content">
+        <figure id="stopwatch">
+            <a href="{{ url_for('main.stopwatch') }}">
+                <img class="main-content-images" id="stopwatch-image" src="{{ url_for('static', filename = '/img/stopwatch-svgrepo-com.svg') }}">
+            </a>
+            <p>Stopwatch</p>
+        </figure>
+        <hr>
+        <figure id="pomodoro">
+            <a href="{{ url_for('main.pomodoroconfig') }}">
+                <img class="main-content-images" id="tomato-image" src="{{ url_for('static', filename = '/img/tomato-svgrepo-com.svg') }}">
+            </a>
+            <p>Pomodoro</p>
+        </figure>
+    </div>
+{% endblock %}
