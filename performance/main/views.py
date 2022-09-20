@@ -34,4 +34,4 @@ def pomodoro():
 
 @main.route('/about', methods=["GET"])
 def about():
-     return render_template('base.html')
+     return render_template('about.html')

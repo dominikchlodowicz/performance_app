@@ -1,4 +1,8 @@
-main, figure{
+/* main, figure, article{
+    background-color: rgba(118, 114, 114, 0.69);
+} */
+
+body{
     background-color: rgba(118, 114, 114, 0.69);
 }
 
@@ -12,4 +16,8 @@ main, figure{
 
 #navbar-night-mode-icon:hover{
     filter: drop-shadow(3px 5px 2px rgba(179, 177, 177, 0.4));
+}
+
+.time{
+    color: #FFFFFF;
 }

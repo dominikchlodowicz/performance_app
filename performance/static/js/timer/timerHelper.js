@@ -11,10 +11,12 @@ var buttonStop = document.getElementById("stop");
 var buttonReset = document.getElementById("reset");
 var timerValue = document.getElementById("timerValue");
 
+console.log(timerValue);
+
 const stopwatch = new Stopwatch.Builder()
     .setTime(hours, minutes, seconds)
     .setTimeDisplay(displayHours, displayMinutes, displaySeconds)
-    .setDataPassElement(timerValue)
+    .setDataPassElementStopwatch(timerValue)
     .setIntervalElement()
     .setNoPomodoro()
     .build();

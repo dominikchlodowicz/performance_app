@@ -1,0 +1,61 @@
+#main-content{
+    text-align: center;
+}
+
+.time-view{
+    font-size: 6em;
+}
+
+#last-time{
+    text-align: center;
+    font-size: 1.5em;
+}
+
+@media all and (max-width:960px) and (max-width: 1024px) {
+    .time-view{
+        font-size: 4em;
+    }
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 30vh auto;
+}
+
+form{
+    display: inline;
+}
+
+.timer-buttons{
+    border-radius: 15px;
+    padding: 5% 7%;
+}
+
+.timer-buttons:hover{
+    cursor: pointer;
+}
+
+#controls{
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#start{
+    background-color: rgba(55, 192, 33, 0.4);
+    margin: 5% 10% 5% 0;
+}
+
+#reset{
+    background-color: rgba(255, 138, 0, 0.4);
+    margin: 5% 0 5% 10%;
+}
+
+#stop{
+    background-color: rgba(255, 0, 0, 0.4);
+    margin: 5% 10% 5% 0;
+}
+
+

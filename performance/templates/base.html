@@ -20,8 +20,10 @@
                     alt="navigation bar night mode icon">
         </header>
     {% endblock %}
-    {% block content %}
+    {% block main %}
         <main>
+            {% block content %}
+            {% endblock %}
         </main>
     {% endblock %}
     {% block footer %}
@@ -32,6 +34,7 @@
     {% endblock %}
 
     <script type="application/javascript">
+        // code for dark mode
         const nightModeIcon = document.getElementById("navbar-night-mode-icon");
         const darkModeStyleSheet = document.getElementById("darkmode");
 

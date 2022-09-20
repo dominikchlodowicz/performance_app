@@ -49,7 +49,7 @@ header{
 
 /* Main */
 
-main{
+main, article{
     flex-grow: 60;
 }
 

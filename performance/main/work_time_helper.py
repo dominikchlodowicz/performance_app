@@ -3,7 +3,7 @@ from .database import insert_db, get_value_db
 
 def insert_time(user_id, route):
     print('Inserting time')
-    if request.form['reset'] == 'reset':
+    if request.form['reset'] == 'Reset':
         print("zresetowało się")
         #getting data from frontend
         request_data = request.form['time'].split(':')
@@ -20,9 +20,11 @@ def insert_time(user_id, route):
             return redirect(url_for(f'main.{route}'))
 
 def get_time(user_id, route, template):
+    print('getting time')
     #creating user_id if it doesn't exist
     if user_id == None:
         response = make_response(render_template(template))
+        print(f'this is session id {session["userid"]}')
         response.set_cookie('user_id', session['userid'])
         session['time'] = '00:00:00'
         return response
