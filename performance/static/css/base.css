@@ -4,11 +4,14 @@
     padding: 0;
     border: 0;
     box-sizing: border-box;
+    font-weight: 500;
 }
 
 
 html, body{
     height: 100%;
+    font-weight: 500;
+
 }
 
 body{
@@ -29,7 +32,7 @@ header{
 }
 
 #header-title{
-    font-weight: 300;
+    font-weight: 500;
     margin: 0.75vh 1vh 0vh;
     font-size: 3.5vh;
     float: left;

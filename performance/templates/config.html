@@ -1,44 +1,55 @@
 {% extends "./base.html" %}
-{% block title %}Performance App{% endblock %}
 
-{% block body %}
-<form method="POST" id="configform">
-    <label for="cycles">Number of cycles:</label>
-    <select name="cycles" id="cycles">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-    </select>
-    
-    <label for="workDuration">Duration of work:</label>
-    <input type="number" name="workDuration" id="workDuration" placeholder="e.g. 25" required>
-    <select name="workDurationHrOrMin" id="workDurationHrOrMin">
-        <option value="minutes">Min.</option>
-        <option value="hours">Hr.</option>
-    </select>
-
-    <label for="breakDuration">Duration of break:</label>
-    <input type="number" name="breakDuration" id="breakDuration" placeholder="e.g. 5" required>
-    <select name="breakDurationHrOrMin" id="breakDurationHrOrMin">
-        <option value="minutes">Min.</option>
-    </select>
-
-    <input type="submit" name="start" value="Start">
-    <br/>
-</form>
+{% block second_stylesheet %}
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/config.css') }}">
 {% endblock %}
 
-{% block error %}
-    {% if session['error'] == None %}
-        <span></span>
-    {% else %}
-        <span>{{ session['error'] }}</span>
-    {% endif %}
-{% endblock error %}
+{% block content %}
+    <div id="main-content">
+        <form method="POST" id="configform">
+            <div class="form-item">
+                <label for="cycles">Number of cycles:</label>
+                <select name="cycles" id="cycles">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            
+            <div class="form-item">
+                <label for="workDuration">Duration of work:</label>
+                <input type="number" name="workDuration" id="workDuration" placeholder="e.g. 25" required>
+                <select name="workDurationHrOrMin" id="workDurationHrOrMin">
+                    <option value="minutes">Min.</option>
+                    <option value="hours">Hr.</option>
+                </select>
+            </div>
+            
+            <div class="form-item">
+                <label for="breakDuration">Duration of break:</label>
+                <input type="number" name="breakDuration" id="breakDuration" placeholder="e.g. 5" required>
+                <select name="breakDurationHrOrMin" id="breakDurationHrOrMin">
+                    <option value="minutes">Min.</option>
+                </select>
+            </div>
+    
+            <input id="start" class="form-item" type="submit" name="start" value="Start">
+            <br/>
+        </form>
+    </div>
+    {% block error %}
+        {% if session['error'] == None %}
+            <span></span>
+        {% else %}
+            <span>{{ session['error'] }}</span>
+        {% endif %}
+    {% endblock error %}
+{% endblock content%}
+
