@@ -21,7 +21,7 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: 30vh auto;
+    margin: 20vh auto;
 }
 
 form{
@@ -58,4 +58,9 @@ form{
     margin: 5% 10% 5% 0;
 }
 
+#work-or-break{
+    display: block;
+    margin-bottom: 1vh;
+    font-size: 1.5em;
+}
 

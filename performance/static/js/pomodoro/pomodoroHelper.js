@@ -11,6 +11,7 @@ var buttonStart = document.getElementById("start");
 var buttonStop = document.getElementById("stop");
 var buttonReset = document.getElementById("reset");
 var workTimeValue = document.getElementById("workTimeValue");
+var workOrBreakElement = document.getElementById("work-or-break");
 
 var cookie = document.cookie;
 
@@ -22,7 +23,9 @@ const stopwatch = new Stopwatch.Builder()
     .setPomodoro(cookie)
     .build();
 
-const pomodoro = new Pomodoro(stopwatch, workTimeValue, buttonReset)
+const pomodoro = new Pomodoro(stopwatch, workTimeValue, buttonReset, workOrBreakElement)
+
+pomodoro.setPomodoroValues();
 
 const startHandler = function(){
     let click = 0;
@@ -43,6 +46,5 @@ buttonStop.addEventListener('click', () => {
 });
 
 buttonReset.addEventListener('click', () => {
-    console.log(workTimeValue.value)
     stopwatch.resetStopwatch();
 });

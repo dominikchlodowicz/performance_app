@@ -10,6 +10,15 @@ def insert_time(user_id, route):
         print(f'This is time {request_data}')
         if request_data == ['']:
             return redirect(url_for(f'main.{route}'))
+        elif request_data != [''] and route == "pomodoro":
+            hours = int(request_data[0])
+            minutes = int(request_data[1])
+            seconds = int(request_data[2])
+
+            #inserting data to database
+            insert_db(route, user_id, hours, minutes, seconds)
+            return redirect(url_for('main.reward'))
+
         else:
             hours = int(request_data[0])
             minutes = int(request_data[1])
@@ -43,6 +52,8 @@ def get_time(user_id, route, template):
 def view_helper(route, template):
     #try to get cookie
     cookie_user_id = request.cookies.get('user_id')
+
+    print(f'This is cookie_user_id{cookie_user_id}')
     
     if request.method == 'POST':
         print("POST")

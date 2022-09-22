@@ -1,0 +1,9 @@
+{% extends "./base.html" %}
+{% block second_stylesheet %}
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/reward.css') }}">
+{% endblock second_stylesheet %}
+
+{% block content %}
+    <img id="trophy" src="{{url_for('static', filename = 'img/trophy-svgrepo-com.svg')}}" alt="congratualtions trophy">
+    <p id="congratulations">Congratulations !!!</p>
+{% endblock content%}

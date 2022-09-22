@@ -1,0 +1,12 @@
+#trophy{
+    display: block;
+    margin: 5vh auto;
+    height: 40vh;
+    filter: invert(83%) sepia(40%) saturate(3709%) hue-rotate(351deg) brightness(101%) contrast(104%);
+}
+
+#congratulations{
+    display: block;
+    margin: 1vh auto;
+    text-align: center;
+}

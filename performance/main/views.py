@@ -35,3 +35,7 @@ def pomodoro():
 @main.route('/about', methods=["GET"])
 def about():
      return render_template('about.html')
+
+@main.route('/reward', methods=["GET"])
+def reward():
+     return render_template('reward.html')

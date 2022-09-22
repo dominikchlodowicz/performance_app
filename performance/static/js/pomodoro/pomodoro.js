@@ -2,7 +2,7 @@ import { wait, turnTimeIntoMs, timeToMinutes, fromMinutesToStringTimeFormat} fro
 
 class Pomodoro{
 
-    constructor(stopwatchInstance, workTimeElement, resetButton){
+    constructor(stopwatchInstance, workTimeElement, resetButton, workOrBreakElement){
         this.stopwatch = stopwatchInstance;
         this.block_id = null;
         // stack of pomodoro actions
@@ -12,6 +12,14 @@ class Pomodoro{
         this.workTimeElement = workTimeElement;
         this.workMinutes = null;
         this.resetButton = resetButton;
+        this.workOrBreakElement = workOrBreakElement;
+    }
+
+    setPomodoroValues(){
+        let workValue = this.stopwatch.workDuration.split(":");
+        this.stopwatch.displayHoursElement.innerHTML = workValue[0];
+        this.stopwatch.displayMinutesElement.innerHTML = workValue[1];
+        this.stopwatch.displaySecondsElement.innerHTML = workValue[2];
     }
 
     async reversedStopwatch(){
@@ -63,7 +71,8 @@ class Pomodoro{
     };
 
     startReversedStopwatch(time){
-        var splittedTime = time.split(":");
+        var splittedTime = time.split(":");  
+
         // setting pomodoro start values
         this.stopwatch.hours = parseInt(splittedTime[0]); 
         this.stopwatch.minutes = parseInt(splittedTime[1]);
@@ -106,9 +115,11 @@ class Pomodoro{
             for(var action_id = 0; action_id < this.pomodoroCallStack[block_id].length; action_id++){
                 switch(this.pomodoroCallStack[block_id][action_id]){
                     case "work":
+                        this.workOrBreakElement.innerHTML = "Work!";
                         this.startReversedStopwatch(this.stopwatch.workDuration);
                         break;
                     case "break":
+                        this.workOrBreakElement.innerHTML = "Break!";
                         this.startReversedStopwatch(this.stopwatch.breakDuration);
                         break;
                     case "waitWork":

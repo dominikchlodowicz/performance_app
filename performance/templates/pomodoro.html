@@ -1,19 +1,43 @@
-{% extends "./base.html" %}
-{% block title %}Performance App{% endblock %}
+{% extends "./base.html" %}Last time was: {{session['time']}}
 
-{% block body %}
-<div class="Timer">
-    <h1>Here's the timer</h1>
-    <span id="hours" >00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
-    <div>
-        <button id="start">start</button>
-        <button id="stop">stop</button>
+{% block second_stylesheet %}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'css/stopwatch.css') }}">
+{% endblock %}
+
+{% block content %}
+<div id="main-content">
+    <span id="work-or-break"></span>
+    <span class="time-view" id="hours">00</span>
+    <span class="time-view">:</span>
+    <span class="time-view" id="minutes">00</span>
+    <span class="time-view">:</span>
+    <span class="time-view" id="seconds">00</span>
+    <div class="controls">
+        <button class="timer-buttons" id="start">Start</button>
+        <button class="timer-buttons" id="stop" style="display: none">Stop</button>
         <form method="POST">
-            <input type="submit" id="reset" name="reset" value="reset">
-            <input type="text" id="workTimeValue" name="time">
+            <input type="submit" class="timer-buttons" id="reset" name="reset" value="Reset">
+            <input type="hidden" id="workTimeValue" name="time">
         </form>
     </div>
-    <h2>Last time you worked for: {{session['time']}}</h2>
 </div>
-<script type="module" src="{{ url_for('static', filename = 'js/pomodoro/pomodoroHelper.js') }}"></script>
+
+<span id="last-time">Last time you completed pomodoro with this much work: {{session['time']}}</h2>
+
+    <script type="module" src="{{ url_for('static', filename = 'js/pomodoro/pomodoroHelper.js') }}"></script>
+    <script type="application/javascript">
+        const stopButton = document.getElementById("stop");
+        const startButton = document.getElementById("start");
+
+        startButton.addEventListener("click", () => {
+            stopButton.setAttribute("style", "");
+            startButton.setAttribute("style", "display: none");
+        })
+
+        stopButton.addEventListener("click", () => {
+            stopButton.setAttribute("style", "display: none");
+            startButton.setAttribute("style", "");
+        })
+
+    </script>
 {% endblock %}
