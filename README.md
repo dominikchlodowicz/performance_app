@@ -20,9 +20,10 @@ Then install all the python dependencies using pip command below.
 Then set the enviroment variable FLASK_APP to name of the main project file.
 Run the project using flask run
 
-...
+
+```console
 $ cd /performace_app
 $ python3 -m venv ./venv
 $ . ./venv/bin/activate
 $ flask run
-...
+```
