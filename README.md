@@ -17,13 +17,13 @@ Project is created with:
 ## Setup
 To run this app on local server, download it, and change the directory to iniside of this app.
 Then install all the python dependencies using pip command below.
-Then set the enviroment variable FLASK_APP to name of the main project file.
 Run the project using flask run
 
 
 ```console
 $ cd /performace_app
 $ python3 -m venv ./venv
+$ pip install -r ./requirements.txt
 $ . ./venv/bin/activate
-$ flask run
+$ $ flask --app hello run
 ```
