@@ -20,7 +20,6 @@ def validate_form_data(pomodoro_config_values):
             elif validated_data['validation_flag']:
                     session['error'] = None
                     response.set_cookie(f'{form_element_name[0]}', str(data_formatting(validated_data['time'], validated_data['min_or_hr'])))
-                    print(pomodoro_config_values[-1])
                     last_item = pomodoro_config_values[-1]
                     if form_element_name == last_item:
                         return response 
