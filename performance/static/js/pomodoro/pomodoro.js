@@ -15,6 +15,7 @@ class Pomodoro{
         this.workOrBreakElement = workOrBreakElement;
     }
 
+    //set pomodoro values when page loads
     setPomodoroValues(){
         let workValue = this.stopwatch.workDuration.split(":");
         this.stopwatch.displayHoursElement.innerHTML = workValue[0];
@@ -23,17 +24,14 @@ class Pomodoro{
     }
 
     async reversedStopwatch(){
-        if(this.stopwatch.waitFlag === false) {        
+        if(this.stopwatch.waitFlag === false) {
+            console.log("substracting second");
+
             if(this.stopwatch.minutes == 0 && this.stopwatch.seconds == 0){
                 this.stopwatch.hours--;
                 this.stopwatch.minutes = 59;
                 this.stopwatch.seconds = 60;
-                
-                if(this.stopwatch.hours <= 9){
-                    this.stopwatch.displayMinutesElement.innerHTML = "0" + this.stopwatch.minutes;
-                } else {
-                    this.stopwatch.displayMinutesElement.innerHTML = this.stopwatch.minutes;
-                }
+                this.stopwatch.displayMinutesElement.innerHTML = this.stopwatch.minutes;
             }
         
             if(this.stopwatch.seconds == 0){
@@ -42,6 +40,8 @@ class Pomodoro{
         
                 if(this.stopwatch.minutes <= 9){
                     this.stopwatch.displayMinutesElement.innerHTML = "0" + this.stopwatch.minutes;
+                    this.stopwatch.displayMinutesElement.innerHTML = this.stopwatch.minutes;
+
                 } else {
                     this.stopwatch.displayMinutesElement.innerHTML = this.stopwatch.minutes;
                 }
@@ -56,23 +56,22 @@ class Pomodoro{
         
             if(this.stopwatch.minutes <= 9){
                 this.stopwatch.displayMinutesElement.innerHTML = "0" + this.stopwatch.minutes;
+                this.stopwatch.displayMinutesElement.innerHTML = this.stopwatch.minutes;
+
             }
         
             if(this.stopwatch.hours <= 9){
                 this.stopwatch.displayHoursElement.innerHTML = "0" + this.stopwatch.hours;
             }
         
-            if(this.stopwatch.hours == 0 && this.stopwatch.minutes == 0 && this.stopwatch.seconds == 0){
-                clearInterval(this.stopwatch.interval);
-            }        
         } else {
             this.pomodoroCallStack[this.block_id].push("waitSecond");
         }
     };
 
     startReversedStopwatch(time){
-        var splittedTime = time.split(":");  
-
+        let splittedTime = time.split(":");  
+        clearInterval(this.stopwatch.interval);
         // setting pomodoro start values
         this.stopwatch.hours = parseInt(splittedTime[0]); 
         this.stopwatch.minutes = parseInt(splittedTime[1]);
@@ -89,7 +88,7 @@ class Pomodoro{
     }
 
     pomodoroStackCreator(){
-        for(var cycle = 1; cycle <= this.stopwatch.cycles; cycle++){
+        for(let cycle = 1; cycle <= this.stopwatch.cycles; cycle++){
             if(cycle < this.stopwatch.cycles){
                 this.pomodoroCallStack.push([
                     "work",
@@ -110,9 +109,9 @@ class Pomodoro{
 
     pomodoroCycle = async() => {
         this.pomodoroStackCreator();
-        for(var block_id = 0; block_id < this.pomodoroCallStack.length; block_id++){
+        for(let block_id = 0; block_id < this.pomodoroCallStack.length; block_id++){
             this.block_id = block_id;
-            for(var action_id = 0; action_id < this.pomodoroCallStack[block_id].length; action_id++){
+            for(let action_id = 0; action_id < this.pomodoroCallStack[block_id].length; action_id++){
                 switch(this.pomodoroCallStack[block_id][action_id]){
                     case "work":
                         this.workOrBreakElement.innerHTML = "Work!";

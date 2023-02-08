@@ -66,7 +66,7 @@ class Stopwatch{
         }
 
         setPomodoro(cookie){
-            var cookies = getCookie(cookie);
+            let cookies = getCookie(cookie);
             this.cycles = parseInt(cookies["cycles"]);
             this.workDuration = cookies["workDuration"];
             this.breakDuration = cookies["breakDuration"];

@@ -1,6 +1,7 @@
 from sqlite3 import connect
 from flask import g
 from config import config
+from tools import small_time_value
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -35,13 +36,6 @@ def insert_db(tableName, id, hours = 0, minutes = 0, seconds = 0) -> None:
     db.commit()
     cur.close()
 
-#this should be in tools.py
-def small_time_value(value):
-    val = int(value)
-    if val < 10:
-        return f'0{val}'
-    else:
-        return value
 
 def get_value_db(tableName, id):
     db = get_db()

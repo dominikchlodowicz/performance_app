@@ -1,11 +1,11 @@
 export function getCookie(cookie){
     const splittedCookiesList = cookie.split("; ");
-    var cookies = {};
-    for(var splittedCookie = 0; splittedCookie < splittedCookiesList.length; splittedCookie++){
-        var cookie_name = '';
-        var cookie_value = '';
-        var flag = false;
-        for(var char = 0; char < splittedCookiesList[splittedCookie].length; char++){
+    let cookies = {};
+    for(let splittedCookie = 0; splittedCookie < splittedCookiesList.length; splittedCookie++){
+        let cookie_name = '';
+        let cookie_value = '';
+        let flag = false;
+        for(let char = 0; char < splittedCookiesList[splittedCookie].length; char++){
             if(splittedCookiesList[splittedCookie][char] == "="){
                 flag = true;
                 continue;

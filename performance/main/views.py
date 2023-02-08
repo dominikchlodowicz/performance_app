@@ -5,6 +5,7 @@ from .pomodoro_config_helper import validate_form_data
 import uuid
 
 @main.before_app_first_request
+# setting user_id for session
 def set_user_id():
      session.permanent = True
      user_id = str(uuid.uuid4())
@@ -19,12 +20,13 @@ def stopwatch():
      return view_helper('stopwatch', 'stopwatch.html')
 
 @main.route('/pomodoroconfig', methods=["GET", "POST"])
-def pomodoroconfig():          
+def pomodoroconfig():
+     # sending data from form          
      if request.method == 'POST':
-          # form elements list
           pomodoro_config_values = ('cycles',('workDuration', 'workDurationHrOrMin'), ('breakDuration' ,'breakDurationHrOrMin'))
           return validate_form_data(pomodoro_config_values)
 
+     #accessing form
      elif request.method == 'GET':
           return render_template('config.html')
 

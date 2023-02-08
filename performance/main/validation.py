@@ -19,7 +19,7 @@ def validate_time(time_tuple):
 
     return {'validation_flag': True, 'time': time, 'min_or_hr': min_or_hr}
 
-
+# format data for frontend
 def data_formatting(time, min_or_hr):
     if min_or_hr == 'hours':
         hours = time
