@@ -1,7 +1,7 @@
 from sqlite3 import connect
 from flask import g
 from config import config
-from tools import small_time_value
+from .tools import small_time_value
 
 def get_db():
     db = getattr(g, '_database', None)
